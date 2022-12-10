@@ -1,0 +1,3 @@
+[submodule "nomad-testing"]
+	path = nomad-testing
+	url = git@github.com:guillheu/nomad-testing.git
