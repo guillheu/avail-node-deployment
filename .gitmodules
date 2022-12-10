@@ -1,3 +1,6 @@
 [submodule "nomad-testing"]
 	path = nomad-testing
 	url = git@github.com:guillheu/nomad-testing.git
+[submodule "avail"]
+	path = avail
+	url = https://github.com/maticnetwork/avail.git
