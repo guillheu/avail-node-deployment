@@ -1,0 +1,56 @@
+- hosts: test_local_node
+  tasks:
+    # - name: Clone the avail repository
+    #   git:
+    #     repo: https://github.com/maticnetwork/avail.git
+    #     dest: avail
+
+    # - name: Install Rust
+    #   shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
+
+    # - name: Source the cargo environment
+    #   shell: source "~/.cargo/env"
+    #   args:
+    #     shell: /bin/bash
+
+    # - name: Install the nightly toolchain
+    #   command: rustup toolchain install nightly
+
+    # - name: Set the default toolchain to nightly
+    #   command: rustup default nightly
+
+    # - name: Add the wasm32 target
+    #   command: rustup target add wasm32-unknown-unknown --toolchain nightly
+
+    # - name: Build the data-avail project
+    #   shell: cargo build --release -p data-avail
+
+
+
+    - name: Create avail directory
+      file:
+        path: /avail
+        state: directory
+      become: yes
+
+    - name: Downloading chain spec
+      get_url:
+        url: https://devnet06.dataavailability.link/chainspec.raw.json 
+        dest: /avail/chainspec.raw.json
+      become: yes
+
+    - name: Create state directory
+      file:
+        path: /avail/state
+        state: directory
+      become: yes
+
+    - name: Create keystore directory
+      file:
+        path: /avail/keystore
+        state: directory
+      become: yes
+
+    - name: Copying avail node binary
+      command: "cp /home/{{ansible_user}}/avail/target/release/data-avail /usr/bin/data-avail"
+      become: yes

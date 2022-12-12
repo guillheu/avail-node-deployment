@@ -1,0 +1,6 @@
+testing:
+  hosts:
+    test_local_node:
+      ansible_host: 192.168.1.37
+      ansible_user: dante
+      ansible_become_pass: toto
