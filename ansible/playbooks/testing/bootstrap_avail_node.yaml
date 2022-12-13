@@ -1,4 +1,4 @@
-- hosts: test_local_node
+- hosts: testing
   tasks:
     # - name: Clone the avail repository
     #   git:

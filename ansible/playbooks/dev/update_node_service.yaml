@@ -1,4 +1,4 @@
-- hosts: test_local_node
+- hosts: dev
   tasks:
   - name: Create systemd service file
     copy:
