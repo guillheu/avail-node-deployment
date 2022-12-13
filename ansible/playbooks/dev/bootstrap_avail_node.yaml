@@ -1,26 +1,42 @@
 - hosts: dev
   tasks:
-    # - name: Clone the avail repository
-    #   git:
-    #     repo: https://github.com/maticnetwork/avail.git
-    #     dest: avail
+    - name: Install GCC
+      become: yes
+      apt:
+        name: gcc
+        state: present
+        update_cache: true
 
-    # - name: Install Rust
-    #   shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
+    - name: Install CLang
+      become: yes
+      apt:
+        name: clang
+        state: present
+
+    - name: Install Git
+      become: yes
+      apt:
+        name: git
+        state: present
+
+    - name: Install Rust
+      shell: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+      become: yes # Become necessary here to make it available to the root user, which we will use later to build the binary.
 
     # - name: Source the cargo environment
-    #   shell: source "~/.cargo/env"
-    #   args:
-    #     shell: /bin/bash
+    #   command: source "/home/{{ansible_user}}/.cargo/env"
 
-    # - name: Install the nightly toolchain
-    #   command: rustup toolchain install nightly
+    - name: Install the nightly toolchain
+      command: /root/.cargo/bin/rustup toolchain install nightly
+      become: yes # Become necessary here to make it available to the root user, which we will use later to build the binary.
 
-    # - name: Set the default toolchain to nightly
-    #   command: rustup default nightly
+    - name: Set the default toolchain to nightly
+      command: /root/.cargo/bin/rustup default nightly
+      become: yes # Become necessary here to make it available to the root user, which we will use later to build the binary.
 
-    # - name: Add the wasm32 target
-    #   command: rustup target add wasm32-unknown-unknown --toolchain nightly
+    - name: Add the wasm32 target
+      command: /root/.cargo/bin/rustup target add wasm32-unknown-unknown --toolchain nightly
+      become: yes # Become necessary here to make it available to the root user, which we will use later to build the binary.
 
     # - name: Build the data-avail project
     #   shell: cargo build --release -p data-avail
@@ -31,6 +47,20 @@
       file:
         path: /avail
         state: directory
+      become: yes
+
+
+
+    - name: Clone the avail repository
+      git:
+        repo: https://github.com/maticnetwork/avail.git
+        dest: /avail/repo
+      become: yes
+    
+    - name: Building the data-avail binary
+      command:
+        cmd: "/root/.cargo/bin/cargo build -r -p data-avail"
+        chdir: /avail/repo
       become: yes
 
     - name: Downloading chain spec
@@ -52,5 +82,5 @@
       become: yes
 
     - name: Copying avail node binary
-      command: "cp /home/{{ansible_user}}/avail/target/release/data-avail /usr/bin/data-avail"
+      command: "cp /avail/repo/target/release/data-avail /usr/bin/data-avail"
       become: yes
