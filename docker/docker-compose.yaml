@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+
+  dev_docker_1:
+    hostname: dev_docker_1
+    runtime: sysbox-runc
+    image: ubuntu-ssh
+    build: 
+      context: .
+      dockerfile: ./ubuntu-ssh.dockerfile
+      args: 
+        GITHUB_USERNAME: ${GITHUB_USERNAME} # loaded from env_file
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+        reservations:
+          cpus: "0.1"
+          memory: 50M
+    networks:
+      dev:
+        ipv4_address: 10.55.1.100
+
+### Networks
+
+networks:
+  dev:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.55.1.0/24
+          gateway: 10.55.1.1
