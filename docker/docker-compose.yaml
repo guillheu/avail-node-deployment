@@ -9,9 +9,7 @@ services:
       context: .
       dockerfile: ./ubuntu-ssh.dockerfile
       args: 
-        GITHUB_USERNAME: ${GITHUB_USERNAME} # loaded from env_file
-    env_file:
-      - .env
+        GITHUB_USERNAME: guillheu     # <------------- Change this
     deploy:
       resources:
         limits:
