@@ -5,7 +5,7 @@ FROM nestybox/ubuntu-bionic-systemd-docker:latest
 ARG GITHUB_USERNAME
 
 # Update the package index and install the openssh-server, sudo, and python3 packages
-RUN apt update && apt install  openssh-server sudo python3 -y
+RUN apt update && apt upgrade -y && apt install  openssh-server sudo python3 -y
 
 # Create a new user with the name specified by the GITHUB_USERNAME ARG variable
 RUN useradd -m -s /bin/bash $GITHUB_USERNAME
