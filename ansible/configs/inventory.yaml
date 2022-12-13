@@ -4,3 +4,8 @@ testing:
       ansible_host: 192.168.1.37
       ansible_user: dante
       ansible_become_pass: toto
+dev:
+  hosts:
+    dev_docker_1:
+      ansible_host: 10.55.1.100
+      ansible_user: root
