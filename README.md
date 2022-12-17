@@ -1,6 +1,8 @@
 ## Avail node deployment
 
-This repo aims at facillitating the deployment and updating of Polygon avail nodes.
+This repo aims at facillitating the deployment and updating of Polygon avail nodes.<br>
+Polygon Avail node repo : https://github.com/maticnetwork/avail<br>
+Polygon Avail documentation : https://wiki.polygon.technology/docs/avail/introduction/what-is-avail/
 
 ### Warning
 This repo is very much a **WORK IN PROGRESS** and is not meant to be used in production without review, modifications or audits.<br>
