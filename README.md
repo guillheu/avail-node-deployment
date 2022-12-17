@@ -15,5 +15,9 @@ Basic knowledge of Ansible is necessary to configure this repo. Knowledge of Doc
 ### How to use
  1. Configure the [`ansible/configs/inventory.yaml` inventory file](/ansible/configs/inventory.yaml) with your node host or hosts
     Note: The "dev" group contains a single host that should map to the dev host bootstrapped by the docker-compose file. Do not modify that group or its host.
- 2. Configure the playbooks in [`ansible/playbooks/`](/ansible/playbooks/) to use the hosts and groups you just defined in the inventory file
- 3. Run the ansible playbook.
+ 2. Modify the [`ansible/configs/node_variables.yaml` file](/ansible/configs/node_variables.yaml) to configure  your node
+ 3. Configure the playbooks in [`ansible/playbooks/`](/ansible/playbooks/) to use the hosts and groups you just defined in the inventory file
+ 4. Run the ansible playbook.
+
+### TODO
+ * Add support for importing controller key
