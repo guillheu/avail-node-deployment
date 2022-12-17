@@ -1,0 +1,10 @@
+avail_node:
+  validator:
+    enabled: true
+  name: "guillheu_test_node"  # Choose the name for your node
+  chainspec_name: "devnet06"  # Which chain to use. examples : devnet06, testnet03 etc... Make sure to use an existing chainspec name.
+  bootnodes:
+  - "/dns/gateway-fullnode-001.devnet06.dataavailability.link/tcp/30333/p2p/12D3KooWBDBcRhvQdhNY6vJyupZXSRFrG8qUCJtok1xv3oG2uucg"
+  - "/dns/gateway-fullnode-002.devnet06.dataavailability.link/tcp/30333/p2p/12D3KooWFNQByvLgK4NtyutLZGmoZeyrShojiKCEkzj8m6YE8teu"
+  - "/dns/gateway-fullnode-003.devnet06.dataavailability.link/tcp/30333/p2p/12D3KooWS2UhfueAWeHc71pxHWZFX5g6enuDyJGPWPApkuWe1Lfi"
+  p2p_port: 30333
