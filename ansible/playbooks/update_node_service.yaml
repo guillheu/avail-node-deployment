@@ -8,16 +8,55 @@
       dest: /avail/{{avail_node.chainspec_name}}-chainspec.raw.json
     become: yes
 
-  - name: Create systemd service file
+  - name: Create systemd service file for the avail node
     template:
       dest: /etc/systemd/system/avail-node.service
       src: ../templates/services/avail-node.service.j2
     become: yes
 
 
-  - name: Update systemd service
+
+
+
+  - name: Create systemd timer file for the updater
+    copy:
+      dest: /etc/systemd/system/avail-node-updater.timer
+      src: ../templates/timers/avail-node-updater.timer
+    become: yes
+
+  - name: Create systemd service file for the updater
+    copy:
+      dest: /etc/systemd/system/avail-node-updater.service
+      src: ../templates/services/avail-node-updater.service
+    become: yes
+
+  - name: Create the auto updater script
+    copy:
+      dest: /avail/auto-updater.sh
+      src: ../templates/scripts/auto-updater.sh
+    become: yes
+
+  - name: Adding execution permissions to the auto updater script
+    file:
+      path: /avail/auto-updater.sh
+      mode: 0744
+    become: yes
+
+
+
+
+  - name: Update systemd avail node service
     systemd:
       name: avail-node
+      state: started
+      enabled: yes
+      masked: no
+      daemon_reload: yes
+    become: yes
+
+  - name: Update systemd updater timer
+    systemd:
+      name: avail-node-updater
       state: started
       enabled: yes
       masked: no
