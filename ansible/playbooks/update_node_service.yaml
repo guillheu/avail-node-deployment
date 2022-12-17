@@ -1,26 +1,31 @@
 - hosts: dev
+  vars_files:
+    - ../configs/node_variables.yaml
   tasks:
+
+  - name: Create avail node script from tempalte
+    template:
+      dest: /avail/start_avail_node.sh
+      src: ../templates/scripts/start_avail_node.sh.j2
+    become: yes
+
+
+  - name: Give execution permissions to avail node script
+    file:
+      path: /avail/start_avail_node.sh
+      mode: 0744
+    become: yes
+
   - name: Downloading chain spec
     get_url:
-      url: https://devnet06.dataavailability.link/chainspec.raw.json 
-      dest: /avail/devnet06-chainspec.raw.json
+      url: https://{{avail_node.chainspec_name}}.dataavailability.link/chainspec.raw.json 
+      dest: /avail/{{avail_node.chainspec_name}}-chainspec.raw.json
     become: yes
 
   - name: Create systemd service file
     copy:
       dest: /etc/systemd/system/avail-node.service
-      content: |
-        [Unit]
-        Description=Avail node service
-        After=network.target
-
-        [Service]
-        Type=simple
-        ExecStart=/usr/bin/data-avail --validator --base-path /avail/state --keystore-path /avail/keystore --execution=NativeElseWasm --offchain-worker=Always --enable-offchain-indexing=true --name "guillh_testnode" --chain=/avail/devnet06-chainspec.raw.json --port 30333 --bootnodes="/dns/gateway-fullnode-001.devnet06.dataavailability.link/tcp/30333/p2p/12D3KooWBDBcRhvQdhNY6vJyupZXSRFrG8qUCJtok1xv3oG2uucg" --bootnodes="/dns/gateway-fullnode-002.devnet06.dataavailability.link/tcp/30333/p2p/12D3KooWFNQByvLgK4NtyutLZGmoZeyrShojiKCEkzj8m6YE8teu" --bootnodes="/dns/gateway-fullnode-003.devnet06.dataavailability.link/tcp/30333/p2p/12D3KooWS2UhfueAWeHc71pxHWZFX5g6enuDyJGPWPApkuWe1Lfi"
-        Restart=on-failure
-
-        [Install]
-        WantedBy=multi-user.target
+      src: ../templates/services/avail-node.service
     become: yes
 
 

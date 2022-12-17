@@ -1,0 +1,14 @@
+# Start the Avail node binary
+/usr/bin/data-avail \
+    {% if avail_node.validator.enabled %}--validator{% endif %} \
+    --base-path /avail/state \
+    --keystore-path /avail/keystore \
+    --execution=NativeElseWasm \
+    --offchain-worker=Always \
+    --enable-offchain-indexing=true \
+    --name {{avail_node.name}} \
+    --chain="/avail/{{avail_node.chainspec_name}}-chainspec.raw.json" \
+    --port {{avail_node.p2p_port}} \
+    {% for bootnode in avail_node.bootnodes %}
+    --bootnodes="{{bootnode}}" \
+    {% endfor %}
