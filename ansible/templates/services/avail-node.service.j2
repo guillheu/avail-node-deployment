@@ -17,6 +17,7 @@ ExecStart=/usr/bin/data-avail \
     {% for bootnode in avail_node.bootnodes %}
     --bootnodes="{{bootnode}}" \
     {% endfor %}
+
 Restart=on-failure
 
 [Install]
