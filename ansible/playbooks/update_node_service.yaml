@@ -2,20 +2,6 @@
   vars_files:
     - ../configs/node_variables.yaml
   tasks:
-
-  - name: Create avail node script from tempalte
-    template:
-      dest: /avail/start_avail_node.sh
-      src: ../templates/scripts/start_avail_node.sh.j2
-    become: yes
-
-
-  - name: Give execution permissions to avail node script
-    file:
-      path: /avail/start_avail_node.sh
-      mode: 0744
-    become: yes
-
   - name: Downloading chain spec
     get_url:
       url: https://{{avail_node.chainspec_name}}.dataavailability.link/chainspec.raw.json 
@@ -23,9 +9,9 @@
     become: yes
 
   - name: Create systemd service file
-    copy:
+    template:
       dest: /etc/systemd/system/avail-node.service
-      src: ../templates/services/avail-node.service
+      src: ../templates/services/avail-node.service.j2
     become: yes
 
 

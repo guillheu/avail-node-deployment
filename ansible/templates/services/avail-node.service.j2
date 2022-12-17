@@ -1,5 +1,10 @@
-# Start the Avail node binary
-/usr/bin/data-avail \
+[Unit]
+Description=Avail node service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/data-avail \
     {% if avail_node.validator.enabled %}--validator{% endif %} \
     --base-path /avail/state \
     --keystore-path /avail/keystore \
@@ -12,3 +17,7 @@
     {% for bootnode in avail_node.bootnodes %}
     --bootnodes="{{bootnode}}" \
     {% endfor %}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
