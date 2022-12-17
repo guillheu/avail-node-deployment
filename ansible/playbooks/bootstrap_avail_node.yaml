@@ -63,12 +63,6 @@
         chdir: /avail/repo
       become: yes
 
-    - name: Downloading chain spec
-      get_url:
-        url: https://devnet06.dataavailability.link/chainspec.raw.json 
-        dest: /avail/chainspec.raw.json
-      become: yes
-
     - name: Create state directory
       file:
         path: /avail/state
