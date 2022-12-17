@@ -1,0 +1,11 @@
+[Unit]
+Description=Avail node updater service
+Wants=avail-node-updater.timer
+After=avail-node.service
+
+[Service]
+Type=oneshot
+ExecStart=/avail/auto-updater.sh
+
+[Install]
+WantedBy=multi-user.target

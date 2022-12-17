@@ -1,0 +1,10 @@
+[Unit]
+Description=Avail node updater timer
+Requires=avail-node-updater.service
+
+[Timer]
+Unit=avail-node-updater.service
+OnCalendar=*-*-* *:*:00
+
+[Install]
+WantedBy=timers.target
